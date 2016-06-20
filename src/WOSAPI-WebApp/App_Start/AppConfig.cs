@@ -15,10 +15,6 @@ namespace WOSAPI_WebApp
             {
                 context.Database.Initialize(false);
             }
-            using (ApplicationDbContext context = new ApplicationDbContext())
-            {
-                context.Database.Initialize(false);
-            }
         }
     }
 }

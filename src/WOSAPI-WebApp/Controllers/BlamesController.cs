@@ -25,7 +25,7 @@ namespace WOSAPI_WebApp.Controllers
                 {
                     ID = blame.ID,
                     CreatedAt = blame.CreatedAt,
-                    CreatedBy = new Guid(blame.CreatedBy),
+                    CreatedBy = blame.CreatedBy,
                     ShameID = blame.ShameID,
                     UserID = blame.UserID
                 };

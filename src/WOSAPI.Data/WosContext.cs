@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using Microsoft.AspNet.Identity.EntityFramework;
 using WOSAPI.Models;
 using WOSAPI.Models.Entity;
 
 namespace WOSAPI.Data
 {
-    public class WosContext : DbContext
+    public class WosContext : IdentityDbContext<ApplicationUser>
     {
         public string UserID { get; set; }
 
@@ -24,9 +25,13 @@ namespace WOSAPI.Data
             Configuration.AutoDetectChangesEnabled = detectChanges;
         }
 
+        public static WosContext Create()
+        {
+            return new WosContext(null);
+        }
+
         public DbSet<Shame> Shames { get; set; }
         public DbSet<Blame> Blames { get; set; }
-        public DbSet<User> Users { get; set; }
 
         public override int SaveChanges()
         {
