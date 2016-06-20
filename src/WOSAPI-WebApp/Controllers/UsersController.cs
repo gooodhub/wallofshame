@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Microsoft.AspNet.Identity;
 using WOSAPI.Data;
 using WOSAPI.Models;
 
@@ -12,7 +13,7 @@ namespace WOSAPI_WebApp.Controllers
         // GET: /api/users
         public List<User> Get()
         {
-            using (WosContext ctx = new WosContext())
+            using (WosContext ctx = new WosContext(User.Identity.GetUserId()))
             {
                 return ctx.Users.ToList();
             }

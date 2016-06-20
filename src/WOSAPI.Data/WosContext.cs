@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+using System.Linq;
 using WOSAPI.Models;
 using WOSAPI.Models.Entity;
 
@@ -7,14 +10,17 @@ namespace WOSAPI.Data
 {
     public class WosContext : DbContext
     {
-        public WosContext()
-            : this(true)
+        public string UserID { get; set; }
+
+        public WosContext(string userID)
+            : this(userID, true)
         {
         }
 
-        public WosContext(bool detectChanges)
+        public WosContext(string userID, bool detectChanges)
             : base("Name=WosContext")
         {
+            UserID = userID;
             Configuration.AutoDetectChangesEnabled = detectChanges;
         }
 
@@ -22,38 +28,41 @@ namespace WOSAPI.Data
         public DbSet<Blame> Blames { get; set; }
         public DbSet<User> Users { get; set; }
 
-        protected override System.Data.Entity.Validation.DbEntityValidationResult ValidateEntity(System.Data.Entity.Infrastructure.DbEntityEntry entityEntry, System.Collections.Generic.IDictionary<object, object> items)
+        public override int SaveChanges()
         {
-            TrackedEntity entity = entityEntry.Entity as TrackedEntity;
-            if (entity != null)
+            IEnumerable<DbEntityEntry<TrackedEntity>> changeSet = ChangeTracker.Entries<TrackedEntity>();
+
+            if (changeSet != null)
             {
-                if (entityEntry.State == EntityState.Added)
+                foreach (DbEntityEntry<TrackedEntity> entry in changeSet.Where(c => c.State != EntityState.Unchanged && c.State != EntityState.Deleted))
                 {
-                    entityEntry.Property("UpdatedAt").IsModified = false;
-                    entityEntry.Property("UpdatedBy").IsModified = false;
-                    if (entity.CreatedAt == DateTime.MinValue || entity.CreatedAt == DateTime.MaxValue)
-                        entity.CreatedAt = DateTime.Now;
-                    //if (string.IsNullOrWhiteSpace(entity.CreatedBy))
-                    //    entity.CreatedBy = UserContext.Current.User != null &&
-                    //                          UserContext.Current.User.Identity.IsAuthenticated
-                    //                              ? UserContext.Current.User.Identity.Name
-                    //                              : null;
-                }
-                else if (entityEntry.State != EntityState.Deleted && entityEntry.State != EntityState.Unchanged)
-                {
-                    entityEntry.Property("CreatedAt").IsModified = false;
-                    entityEntry.Property("CreatedBy").IsModified = false;
-                    if (!entity.UpdatedAt.HasValue || entity.UpdatedAt == DateTime.MinValue || entity.UpdatedAt == DateTime.MaxValue)
-                        entity.UpdatedAt = DateTime.Now;
-                    //if (string.IsNullOrWhiteSpace(entity.UpdatedBy))
-                    //    entity.UpdatedBy = UserContext.Current.User != null &&
-                    //                          UserContext.Current.User.Identity.IsAuthenticated
-                    //                              ? UserContext.Current.User.Identity.Name
-                    //                              : null;
+                    if (entry.State == EntityState.Added)
+                    {
+                        entry.Entity.CreatedAt = DateTime.Now;
+                        entry.Entity.CreatedBy = UserID;
+                        entry.Property(te => te.UpdatedAt).IsModified = false;
+                        entry.Property(te => te.UpdatedBy).IsModified = false;
+                    }
+                    else if (entry.State == EntityState.Modified)
+                    {
+                        entry.Entity.UpdatedAt = DateTime.Now;
+                        entry.Entity.UpdatedBy = UserID;
+                        entry.Property(te => te.CreatedAt).IsModified = false;
+                        entry.Property(te => te.CreatedBy).IsModified = false;
+                    }
                 }
             }
 
-            return base.ValidateEntity(entityEntry, items);
+            return base.SaveChanges();
+        }
+    }
+
+    public class MigrationsContextFactory : IDbContextFactory<WosContext>
+    {
+        public WosContext Create()
+        {
+            // Pour éviter d'avoir un WosContext sans paramètre
+            return new WosContext(null);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace WOSAPI_WebApp
     {
         public static void InitializeDatabase()
         {
-            using (WosContext context = new WosContext())
+            using (WosContext context = new WosContext(null))
             {
                 context.Database.Initialize(false);
             }

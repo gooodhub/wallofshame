@@ -6,7 +6,12 @@ namespace WOSAPI.Data.Repositories
 {
     public class BlameRepository : IBlameRepository, IDisposable
     {
-        private readonly WosContext _context = new WosContext();
+        private readonly WosContext _context;
+
+        public BlameRepository(string userID)
+        {
+            _context = new WosContext(userID);
+        }
 
         public void Add(Blame blame)
         {

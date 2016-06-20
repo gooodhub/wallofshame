@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Web.Http;
+using Microsoft.AspNet.Identity;
 using WOSAPI.Data.Repositories;
 using WOSAPI.Models;
 using WOSAPI_WebApp.Models;
@@ -14,7 +15,7 @@ namespace WOSAPI_WebApp.Controllers
         // GET /api/blames/{id}
         public BlameViewModel Get(long id)
         {
-            using (BlameRepository repo = new BlameRepository())
+            using (BlameRepository repo = new BlameRepository(User.Identity.GetUserId()))
             {
                 Blame blame = repo.Get().SingleOrDefault(b => b.ID == id);
                 if (blame == null)
@@ -34,7 +35,7 @@ namespace WOSAPI_WebApp.Controllers
         // POST /api/blames
         public void Post(BlameViewModel blame)
         {
-            using (BlameRepository repo = new BlameRepository())
+            using (BlameRepository repo = new BlameRepository(User.Identity.GetUserId()))
             {
                 repo.Add(new Blame
                 {
