@@ -21,7 +21,7 @@ namespace WOSAPI_WebApp.Models
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext()
-            : base("DefaultConnection", throwIfV1Schema: false)
+            : base("WosContext", throwIfV1Schema: false)
         {
         }
         

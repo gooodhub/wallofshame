@@ -114,13 +114,13 @@
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.3\lib\net45\System.Web.WebPages.Razor.dll</HintPath>
     </Reference>
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="WebGrease">
-      <Private>True</Private>
-      <HintPath>..\packages\WebGrease.1.5.2\lib\WebGrease.dll</HintPath>
-    </Reference>
     <Reference Include="Antlr3.Runtime">
       <Private>True</Private>
       <HintPath>..\packages\Antlr.3.4.1.9004\lib\Antlr3.Runtime.dll</HintPath>
+    </Reference>
+    <Reference Include="WebGrease, Version=1.6.5135.21930, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\WebGrease.1.6.0\lib\WebGrease.dll</HintPath>
+      <Private>True</Private>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +179,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BlamesController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -213,6 +214,22 @@
     <Content Include="packages.config" />
     <Content Include="Exploitation\database.config" />
     <Content Include="Exploitation\settings.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Exploitation\database.config.sample">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="Exploitation\settings.config.sample" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WOSAPI.Data\WOSAPI.Data.csproj">
+      <Project>{B8FC763B-A2AA-4408-AB82-267F5CBCEADB}</Project>
+      <Name>WOSAPI.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WOSAPI.Models\WOSAPI.Models.csproj">
+      <Project>{7A1E3478-435B-4DED-AF96-919329E3C92B}</Project>
+      <Name>WOSAPI.Models</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
