@@ -19,6 +19,8 @@ namespace WOSAPI.Data
         }
 
         public DbSet<Shame> Shames { get; set; }
+        public DbSet<Blame> Blames { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override System.Data.Entity.Validation.DbEntityValidationResult ValidateEntity(System.Data.Entity.Infrastructure.DbEntityEntry entityEntry, System.Collections.Generic.IDictionary<object, object> items)
         {

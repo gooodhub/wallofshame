@@ -8,6 +8,7 @@ using WOSAPI_WebApp.Models;
 
 namespace WOSAPI_WebApp.Controllers
 {
+    [Authorize]
     public class BlamesController : Controller
     {
         // GET /api/blames
