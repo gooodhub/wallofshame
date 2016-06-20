@@ -8,7 +8,7 @@ namespace WOSAPI.Data
     public class WosContext : DbContext
     {
         public WosContext()
-            : this(false)
+            : this(true)
         {
         }
 
@@ -18,7 +18,7 @@ namespace WOSAPI.Data
             Configuration.AutoDetectChangesEnabled = detectChanges;
         }
 
-        public DbSet<Blame> Blames { get; set; }
+        public DbSet<Shame> Shames { get; set; }
 
         protected override System.Data.Entity.Validation.DbEntityValidationResult ValidateEntity(System.Data.Entity.Infrastructure.DbEntityEntry entityEntry, System.Collections.Generic.IDictionary<object, object> items)
         {

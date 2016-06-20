@@ -10,7 +10,7 @@ namespace WOSAPI.Data.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
-            AutomaticMigrationDataLossAllowed = false;
+            AutomaticMigrationDataLossAllowed = true;
         }
 
         protected override void Seed(WOSAPI.Data.WosContext context)

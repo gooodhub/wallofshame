@@ -1,31 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using WOSAPI.Data;
 using WOSAPI.Models;
 
 namespace WOSAPI_WebApp.Controllers
 {
-    public class BlamesController : ApiController
+    [Authorize]
+    public class ShamesController : ApiController
     {
-        // GET /api/blames
-        public List<Blame> Get()
+        // GET /api/shames
+        public List<Shame> Get()
         {
             using (WosContext ctx = new WosContext())
             {
-                return ctx.Blames.ToList();
+                return ctx.Shames.ToList();
             }
         }
 
-        // POST /api/blames
-        public void Post(Blame blame)
+        // POST /api/shames
+        public void Post(Shame shame)
         {
             using (WosContext ctx = new WosContext())
             {
-                ctx.Blames.Add(blame);
+                ctx.Shames.Add(shame);
                 ctx.SaveChanges();
             }
         }

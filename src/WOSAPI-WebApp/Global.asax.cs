@@ -16,6 +16,7 @@ namespace WOSAPI_WebApp
             AreaRegistration.RegisterAllAreas();
             GlobalConfiguration.Configure(WebApiConfig.Register);
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
+            AppConfig.InitializeDatabase();
         }
     }
 }

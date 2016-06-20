@@ -42,7 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Blame.cs" />
+    <Compile Include="Shame.cs" />
     <Compile Include="Entity\TrackedEntity.cs" />
     <Compile Include="Entity\IEntity.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
