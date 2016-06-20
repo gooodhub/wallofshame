@@ -4,15 +4,16 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using WOSAPI.Models;
+using WOSAPI_WebApp.Models;
 
 namespace WOSAPI_WebApp.Controllers
 {
     public class BlamesController : Controller
     {
         // GET /api/blames
-        public Blame Get(string id)
+        public BlameViewModel Get(string id)
         {
-            return new Blame();
+            return new BlameViewModel();
         }
     }
 }

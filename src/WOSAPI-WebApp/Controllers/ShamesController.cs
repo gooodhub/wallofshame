@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
-using WOSAPI.Data;
+using WOSAPI.Data.Repositories;
 using WOSAPI.Models;
+using WOSAPI_WebApp.Models;
 
 namespace WOSAPI_WebApp.Controllers
 {
@@ -10,22 +11,27 @@ namespace WOSAPI_WebApp.Controllers
     public class ShamesController : ApiController
     {
         // GET /api/shames
-        public List<Shame> Get()
+        public List<ShameViewModel> Get()
         {
-            using (WosContext ctx = new WosContext())
-            {
-                return ctx.Shames.ToList();
-            }
+            using (ShameRepository repo = new ShameRepository())
+                return repo.Get().Select(s => new ShameViewModel
+                {
+                    ID = s.ID,
+                    Name = s.Name,
+                    ImagePath = s.ImagePath
+                }).ToList();
         }
 
         // POST /api/shames
-        public void Post(Shame shame)
+        public void Post(ShameViewModel shame)
         {
-            using (WosContext ctx = new WosContext())
-            {
-                ctx.Shames.Add(shame);
-                ctx.SaveChanges();
-            }
+            using (ShameRepository repo = new ShameRepository())
+                repo.Add(new Shame
+                {
+                    ID = shame.ID,
+                    Name = shame.Name,
+                    ImagePath = shame.ImagePath
+                });
         }
     }
 }

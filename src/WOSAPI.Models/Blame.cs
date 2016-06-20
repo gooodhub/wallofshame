@@ -8,9 +8,11 @@ namespace WOSAPI.Models
         public long ID { get; set; }
 
         public DateTime DateCreation { get; set; }
-        
-        public Shame Shame { get; set; }
 
-        public User User { get; set; }
+        public long ShameID { get; set; }
+        public virtual Shame Shame { get; set; }
+
+        public Guid UserID { get; set; }
+        public virtual User User { get; set; }
     }
 }

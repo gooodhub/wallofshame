@@ -8,8 +8,11 @@ namespace WOSAPI.Models
     {
         public long ID { get; set; }
 
-        [StringLength(100)]
+        [StringLength(100), Required]
         public string Name { get; set; }
+
+        [Required]
+        public string ImagePath { get; set; }
 
         public virtual ICollection<Blame> Blames { get; set; }
     }
