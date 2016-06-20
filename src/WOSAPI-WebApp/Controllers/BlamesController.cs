@@ -1,20 +1,47 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using System.Net;
+using System.Web.Http;
+using WOSAPI.Data.Repositories;
 using WOSAPI.Models;
 using WOSAPI_WebApp.Models;
 
 namespace WOSAPI_WebApp.Controllers
 {
     [Authorize]
-    public class BlamesController : Controller
+    public class BlamesController : ApiController
     {
-        // GET /api/blames
-        public BlameViewModel Get(string id)
+        // GET /api/blames/{id}
+        public BlameViewModel Get(long id)
         {
-            return new BlameViewModel();
+            using (BlameRepository repo = new BlameRepository())
+            {
+                Blame blame = repo.Get().SingleOrDefault(b => b.ID == id);
+                if (blame == null)
+                    throw new HttpResponseException(HttpStatusCode.NotFound);
+
+                return new BlameViewModel
+                {
+                    ID = blame.ID,
+                    CreatedAt = blame.CreatedAt,
+                    CreatedBy = new Guid(blame.CreatedBy),
+                    ShameID = blame.ShameID,
+                    UserID = blame.UserID
+                };
+            }
+        }
+
+        // POST /api/blames
+        public void Post(BlameViewModel blame)
+        {
+            using (BlameRepository repo = new BlameRepository())
+            {
+                repo.Add(new Blame
+                {
+                    ShameID = blame.ShameID,
+                    UserID = blame.UserID
+                });
+            }
         }
     }
 }

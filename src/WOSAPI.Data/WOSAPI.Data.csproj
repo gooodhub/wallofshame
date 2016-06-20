@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Repositories\BlameRepository.cs" />
     <Compile Include="Repositories\ShameRepository.cs" />
     <Compile Include="WosMigrationInitializer.cs" />
     <Compile Include="WosContext.cs" />
